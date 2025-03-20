@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Dataset {
 	private ArrayList<Atributo> atributos;
@@ -214,7 +215,7 @@ public class Dataset {
 		return valores;
 	}
 	
-	public ArrayList<String> getClases() {
+	public List<String> getClases() {
 		return ((Cualitativo) this.atributos.get(atributos.size()-1)).clases();
 	}
 	
@@ -229,15 +230,5 @@ public class Dataset {
 	public void setAtributos(ArrayList<Atributo> nuevos) {
 		this.atributos = nuevos;
 	}
-	
-	public Dataset clone() {
-		Dataset copia = new Dataset();
-	    // Realizar una copia profunda de los elementos de la lista
-		ArrayList<Atributo> copiaAtributos = new ArrayList<>();
-	    for (Atributo atributo : this.atributos) {
-	        copiaAtributos.add(atributo.clone());
-	    }
-	    copia.setAtributos(copiaAtributos);
-	    return copia;
-	}
+
 }

@@ -37,6 +37,13 @@ public abstract class Atributo {
 	public abstract String toString();
 	
 	public abstract void clear();
-	
-	public abstract Atributo clone();
+
+	public Atributo() {
+		this.nombre = "";
+	}
+
+    public Atributo(Atributo otro) {
+		this.nombre = otro.nombre;
+		this.peso = otro.peso;
+    }
 }

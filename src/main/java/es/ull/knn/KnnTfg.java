@@ -69,7 +69,7 @@ public class KnnTfg {
 				String[] subcadenas = valoresString.split(",");
 				ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(subcadenas));
 				Instancia instance = new Instancia (valoresString);
-				Dataset copiaCrudos = new Dataset(datosCrudos.clone());
+				Dataset copiaCrudos = new Dataset(datosCrudos);
 				if (datos.getPreprocesado() != 1) {
 					arrayList.add("clase");
 					copiaCrudos.add(arrayList);

@@ -26,7 +26,11 @@ public class Cuantitativo extends Atributo{
 		this.nombre = name;
 		this.valores = valor;
 	}
-	
+
+	public Cuantitativo(Cuantitativo otro) {
+		this.nombre = otro.nombre;
+		this.valores = otro.valores;
+	}
 	
 	public Vector getValores() {
 		return this.valores;
@@ -108,9 +112,5 @@ public class Cuantitativo extends Atributo{
 	public void clear() {
 		valores.clear();
 	}
-	
-	@Override
-	public Cuantitativo clone() {
-		return new Cuantitativo(new String (this.nombre), this.valores.clone());
-	}
+
 }
