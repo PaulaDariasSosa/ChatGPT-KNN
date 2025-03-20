@@ -209,10 +209,10 @@ public class Dataset {
 		return new Instancia (auxiliar);
 	}
 	
-	public List<String> getPesos() {
+	public String getPesos() {
 		ArrayList<String> valores = new ArrayList<String>();
 		for (Atributo valor : this.atributos) valores.add(valor.get());
-		return valores;
+		return valores.toString();
 	}
 	
 	public List<String> getClases() {

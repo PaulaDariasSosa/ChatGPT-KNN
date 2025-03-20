@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import clasificacion.KNN;
@@ -106,7 +107,7 @@ public class KnnTfg {
 				archivo = scanner1.nextLine();
 				break;
 			case(2):
-				System.out.println(ruta);
+				LOGGER.info(ruta);
 				break;
 			case(3):
 				Scanner scanner2 = new Scanner(System.in);
@@ -139,7 +140,7 @@ public class KnnTfg {
 				valores = scanner1.nextLine();
 				String[] subcadenas = valores.split(",");
 				ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(subcadenas));
-				System.out.println(arrayList);
+				LOGGER.info((Supplier<String>) arrayList);
 				data.add(arrayList);
 				return data;
 			case(2):
@@ -262,7 +263,7 @@ public class KnnTfg {
 			int valor = 0;
 			Scanner scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
-			System.out.println(data.getInstance(valor).toString());
+			LOGGER.info(data.getInstance(valor).toString());
 			break;
 		case(3):
 			infoCuantitativo(data);
@@ -271,7 +272,7 @@ public class KnnTfg {
 			infoCualitativo(data);
 			break;
 		case(5):
-			System.out.println(data.getPesos());
+			LOGGER.info(data.getPesos());
 			break;
 		default:
 			break;
@@ -300,28 +301,28 @@ public class KnnTfg {
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			System.out.println(auxiliar.media());
+			LOGGER.info(Double.toString(auxiliar.media()));
 			break;
 		case(3):
 				valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			System.out.println(auxiliar.maximo());
+			LOGGER.info(Double.toString(auxiliar.maximo()));
 			break;
 		case(4):
 			valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			System.out.println(auxiliar.minimo());
+			LOGGER.info(Double.toString(auxiliar.minimo()));
 			break;
 		case(5):
 			valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			System.out.println(auxiliar.desviacion());
+			LOGGER.info(Double.toString(auxiliar.desviacion()));
 			break;
 		default:
 			break;
@@ -354,21 +355,29 @@ public class KnnTfg {
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			Cualitativo auxiliar = (Cualitativo) data.get(valor);
-			System.out.println(auxiliar.nClases());
+			LOGGER.info(Integer.toString(auxiliar.nClases()));
 			break;
 		case(3):
 				valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cualitativo) data.get(valor);
-			System.out.println(auxiliar.clases());
+			String aux = "";
+			for (String clase : auxiliar.clases()) {
+				aux += clase + " ";
+			}
+			LOGGER.info(aux);
 			break;
 		case(4):
 			valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cualitativo) data.get(valor);
-			System.out.println(auxiliar.frecuencia());
+			String aux1 = "";
+			for (Double clase : auxiliar.frecuencia()) {
+				aux1 += clase + " ";
+			}
+			LOGGER.info(aux1);
 			break;
 		default:
 			break;
