@@ -1,10 +1,11 @@
 package procesamiento;
 import java.util.ArrayList;
+import java.util.List;
 
 import datos.Atributo;
 import datos.Dataset;
 
 public interface Preprocesado {
 	
-	public ArrayList<Atributo> Procesar(Dataset datos);
+	public List<Atributo> Procesar(Dataset datos);
 }

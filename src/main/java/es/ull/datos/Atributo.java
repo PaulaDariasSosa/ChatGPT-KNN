@@ -38,11 +38,11 @@ public abstract class Atributo {
 	
 	public abstract void clear();
 
-	public Atributo() {
+	protected Atributo() {
 		this.nombre = "";
 	}
 
-    public Atributo(Atributo otro) {
+	protected Atributo(Atributo otro) {
 		this.nombre = otro.nombre;
 		this.peso = otro.peso;
     }

@@ -77,8 +77,8 @@ public class KnnTfg {
 					if (datos.getPreprocesado() == 2) intento1 = new Normalizacion();
 					if (datos.getPreprocesado() == 3) intento1 = new Estandarizacion();
 					copiaCrudos = new Dataset (intento1.Procesar(copiaCrudos));
-					instance = copiaCrudos.getInstance(copiaCrudos.NumeroCasos()-1);
-					copiaCrudos.delete(copiaCrudos.NumeroCasos()-1);
+					instance = copiaCrudos.getInstance(copiaCrudos.numeroCasos()-1);
+					copiaCrudos.delete(copiaCrudos.numeroCasos()-1);
 					instance.deleteClase();
 				}
 				LOGGER.info("La clase elegida es: " + intento.clasificar(copiaCrudos, instance));
@@ -221,13 +221,13 @@ public class KnnTfg {
 			valores = scanner1.nextLine();
 			String[] subcadenas = valores.split(",");
 			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(subcadenas));
-			data.CambiarPeso(arrayList);
+			data.cambiarPeso(arrayList);
 			return data;
 		case(2):
 			double valoresD = 1.0;
 			scanner1 = new Scanner(System.in);
 			valoresD = scanner1.nextDouble();
-			data.CambiarPeso(valoresD);
+			data.cambiarPeso(valoresD);
 			return data;
 		case(3):
 			int valorI = 0;
@@ -237,7 +237,7 @@ public class KnnTfg {
 			LOGGER.info("Peso para asignar(Debe estar entre 0 y 1): ");
 			valoresD = 1.0;
 			valoresD = scanner1.nextDouble();
-			data.CambiarPeso(valorI, valoresD);
+			data.cambiarPeso(valorI, valoresD);
 			return data;
 		default:
 			break;

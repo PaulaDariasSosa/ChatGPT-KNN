@@ -38,7 +38,7 @@ public class Cualitativo extends Atributo{
 		return this.valores;
 	}
 	
-	public void setValores(ArrayList<String> nuevos) {
+	public void setValores(List<String> nuevos) {
 		this.valores = nuevos;
 	}
 	
