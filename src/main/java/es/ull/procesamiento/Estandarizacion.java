@@ -1,6 +1,5 @@
 package procesamiento;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import datos.Atributo;
@@ -9,7 +8,7 @@ import datos.Dataset;
 
 public class Estandarizacion implements Preprocesado{
 	
-	public List<Atributo> Procesar(Dataset datos) {
+	public List<Atributo> procesar(Dataset datos) {
 		List<Atributo> nuevos = datos.getAtributos();
 		Cuantitativo ejemplo = new Cuantitativo();
 		for (int i = 0; i < nuevos.size(); i++) {

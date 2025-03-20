@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.security.SecureRandom;
+import java.util.logging.Logger;
 
 import clasificacion.KNN;
 import datos.*;
@@ -73,8 +74,8 @@ public class Entrenamiento {
 			String clase = (new KNN(valorK).clasificar(train, nueva));
 			if (clase.equals(test.getInstance(i).getClase())) aciertos += 1;
 		}
-		System.out.println("La precisión predictiva: " + aciertos + " / " + test.numeroCasos() +" = "+ (aciertos/test.numeroCasos())*100 + "%");
-		
+		Logger logger = Logger.getLogger(Entrenamiento.class.getName());
+		logger.info("La precisión predictiva: " + aciertos + " / " + test.numeroCasos() +" = "+ (aciertos/test.numeroCasos())*100 + "%");
 	}
 	
 	public void generarMatriz(int valorK) {
@@ -89,7 +90,8 @@ public class Entrenamiento {
 			String clase = (new KNN(valorK).clasificar(train, nueva));
 			confusion.set( clases.indexOf(test.getInstance(i).getClase()),clases.indexOf(clase),confusion.get(clases.indexOf(test.getInstance(i).getClase()),clases.indexOf(clase))+1);
 		}
-		System.out.println(clases);
+		Logger logger = Logger.getLogger(Entrenamiento.class.getName());
+		logger.info(clases.toString());
 		confusion.print();
 	}
 	

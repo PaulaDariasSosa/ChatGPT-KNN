@@ -1,5 +1,7 @@
 package vectores;
 
+import entrenamiento.Entrenamiento;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,10 +9,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Vector {
-	private ArrayList<Double> coef;
+	private List<Double> coef;
+    private static final String MSG_MISMO_TAMANO = "Los vectores deben tener el mismo tamaño";
 
     /**
      * Constructor vacio
@@ -34,7 +39,7 @@ public class Vector {
      * Constructor que recibe un ArrayList de double
      * @param coef
      */
-    public Vector(ArrayList<Double> coef) {
+    public Vector(List<Double> coef) {
     	this.coef = new ArrayList<>(coef);
     }
     
@@ -86,8 +91,8 @@ public class Vector {
      * Método para clonar un vector
      * @return la copia del vector original
      */
-    public Vector clone() {
-        return new Vector(new ArrayList<Double> (this.coef));
+    public Vector(Vector otro) {
+        coef = new ArrayList<>(otro.coef);
     }
     
     /**
@@ -108,7 +113,8 @@ public class Vector {
     }
 
     public void print() {
-        System.out.println(this.toString());
+        Logger logger = Logger.getLogger(Vector.class.getName());
+        logger.info(this.toString());
     }
 
     public double get(int index) {
@@ -124,7 +130,7 @@ public class Vector {
     }
     
     public void add(Vector other) {
-        if (this.size() != other.size()) throw new IllegalArgumentException("Los vectores deben tener el mismo tamaño");
+        if (this.size() != other.size()) throw new IllegalArgumentException(MSG_MISMO_TAMANO);
         for (int i = 0; i < this.size(); i++) {
         	coef.set(i, coef.get(i) + other.get(i));
         }
@@ -165,7 +171,7 @@ public class Vector {
     
     // cambiar nombre
     public double productoEscalar(Vector other) {
-        if (this.size() != other.size())throw new IllegalArgumentException("Los vectores deben tener el mismo tamaño");
+        if (this.size() != other.size())throw new IllegalArgumentException(MSG_MISMO_TAMANO);
         double result = 0;
         for (int i = 0; i < this.size(); i++) result += this.get(i) * other.get(i);
         return result;
@@ -180,7 +186,7 @@ public class Vector {
     }
 
     public Vector sum(Vector other) {
-        if (this.size() != other.size()) throw new IllegalArgumentException("Los vectores deben tener el mismo tamaño");
+        if (this.size() != other.size()) throw new IllegalArgumentException(MSG_MISMO_TAMANO);
         Vector suma = new Vector();
         for (int i = 0; i < this.size(); i++) {
         	suma.add(coef.get(i) + other.get(i));
@@ -278,7 +284,7 @@ public class Vector {
         }
     }
     
-    public ArrayList<Double> getValores() {
+    public List<Double> getValores() {
         return this.coef;
     }
 }
