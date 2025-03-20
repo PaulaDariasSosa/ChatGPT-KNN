@@ -67,7 +67,7 @@ public class Dataset {
 	// toString
 	public String toString() {
 		String data = "";
-		ArrayList<String> valores = this.nombreAtributos();
+		List<String> valores = this.nombreAtributos();
 		valores.addAll(this.getValores());
 		int contador = 1;
 		for (int i = 0; i < valores.size(); ++i) { 
@@ -157,7 +157,7 @@ public class Dataset {
 	}
 	
 	// nombre atributos
-	public ArrayList<String> nombreAtributos(){
+	public List<String> nombreAtributos(){
 		ArrayList<String> nombres = new ArrayList<>();
 		for(int i = 0; i < atributos.size(); ++i) nombres.add(atributos.get(i).getNombre());
 		return nombres;
@@ -227,7 +227,7 @@ public class Dataset {
 		this.preprocesado = opcion;
 	}
 	
-	public void setAtributos(ArrayList<Atributo> nuevos) {
+	public void setAtributos(List<Atributo> nuevos) {
 		this.atributos = nuevos;
 	}
 
