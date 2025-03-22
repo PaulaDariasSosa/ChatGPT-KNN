@@ -84,7 +84,7 @@ public class KnnTfg {
 		datos.write(ruta + archivo);
 	}
 
-	private static void ejecutarKNN(Dataset datos, Dataset datosCrudos) throws IOException {
+	private static void ejecutarKNN(Dataset datos, Dataset datosCrudos) {
 		LOGGER.info(MSG_INTRODUCE_VALOR_K);
 		int k = leerOpcion();
 		KNN intento = new KNN(k);
