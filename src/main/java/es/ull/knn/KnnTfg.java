@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Supplier;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import clasificacion.KNN;
@@ -82,7 +83,9 @@ public class KnnTfg {
 					copiaCrudos.delete(copiaCrudos.numeroCasos()-1);
 					instance.deleteClase();
 				}
-				LOGGER.info("La clase elegida es: " + intento.clasificar(copiaCrudos, instance));
+				if (LOGGER.isLoggable(Level.INFO)) {
+					LOGGER.info("La clase elegida es: " + intento.clasificar(copiaCrudos, instance));
+				}
 				break;
 			default:
 			}
@@ -263,7 +266,9 @@ public class KnnTfg {
 			int valor = 0;
 			Scanner scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
-			LOGGER.info(data.getInstance(valor).toString());
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(data.getInstance(valor).toString());
+			}
 			break;
 		case(3):
 			infoCuantitativo(data);
@@ -301,28 +306,36 @@ public class KnnTfg {
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			LOGGER.info(Double.toString(auxiliar.media()));
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(Double.toString(auxiliar.media()));
+			}
 			break;
 		case(3):
 				valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			LOGGER.info(Double.toString(auxiliar.maximo()));
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(Double.toString(auxiliar.maximo()));
+			}
 			break;
 		case(4):
 			valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			LOGGER.info(Double.toString(auxiliar.minimo()));
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(Double.toString(auxiliar.minimo()));
+			}
 			break;
 		case(5):
 			valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cuantitativo) data.get(valor);
-			LOGGER.info(Double.toString(auxiliar.desviacion()));
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(Double.toString(auxiliar.desviacion()));
+			}
 			break;
 		default:
 			break;
@@ -355,29 +368,33 @@ public class KnnTfg {
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			Cualitativo auxiliar = (Cualitativo) data.get(valor);
-			LOGGER.info(Integer.toString(auxiliar.nClases()));
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(Integer.toString(auxiliar.nClases()));
+			}
 			break;
 		case(3):
-				valor = 0;
+			valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cualitativo) data.get(valor);
-			String aux = "";
+			StringBuilder dataBuilder = new StringBuilder();
 			for (String clase : auxiliar.clases()) {
-				aux += clase + " ";
+				dataBuilder.append(clase);
+				dataBuilder.append(" ");
 			}
-			LOGGER.info(aux);
+			LOGGER.info(dataBuilder.toString());
 			break;
 		case(4):
 			valor = 0;
 			scanner1 = new Scanner(System.in);
 			valor = scanner1.nextInt();
 			auxiliar = (Cualitativo) data.get(valor);
-			String aux1 = "";
+			StringBuilder dataBuilder1 = new StringBuilder();
 			for (Double clase : auxiliar.frecuencia()) {
-				aux1 += clase + " ";
+				dataBuilder1.append(clase);
+				dataBuilder1.append(" ");
 			}
-			LOGGER.info(aux1);
+			LOGGER.info(dataBuilder1.toString());
 			break;
 		default:
 			break;

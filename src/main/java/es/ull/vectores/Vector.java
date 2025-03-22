@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Vector {
@@ -112,7 +113,9 @@ public class Vector {
 
     public void print() {
         Logger logger = Logger.getLogger(Vector.class.getName());
-        logger.info(this.toString());
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(this.toString());
+        }
     }
 
     public double get(int index) {

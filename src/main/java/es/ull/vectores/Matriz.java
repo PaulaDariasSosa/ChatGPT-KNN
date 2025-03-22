@@ -92,7 +92,7 @@ public class Matriz {
         return column;
     }
     
-    public Matriz read(String filename) throws FileNotFoundException, IOException {
+    public Matriz read(String filename) throws IOException {
     	try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             int m = Integer.parseInt(reader.readLine());
             int n = Integer.parseInt(reader.readLine());
@@ -130,7 +130,7 @@ public class Matriz {
             return false;
         }
         for (int i = 0; i < numRows; i++) {
-            if (this.matrix.get(i).equals(other.matrix.get(i)) == false) {
+            if (!this.matrix.get(i).equals(other.matrix.get(i))) {
                 return false;
             }
         }

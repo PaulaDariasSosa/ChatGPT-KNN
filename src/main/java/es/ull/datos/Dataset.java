@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Dataset {
@@ -61,7 +62,9 @@ public class Dataset {
 	// Print
 	public void print() {
 		Logger logger = Logger.getLogger(Dataset.class.getName());
-		logger.info(this.toString());
+		if (logger.isLoggable(Level.INFO)) {
+			logger.info(this.toString());
+		}
 	}
 	
 	// toString
@@ -70,16 +73,18 @@ public class Dataset {
 		List<String> valores = this.nombreAtributos();
 		valores.addAll(this.getValores());
 		int contador = 1;
-		for (int i = 0; i < valores.size(); ++i) { 
-			data += valores.get(i);
+		StringBuilder dataBuilder = new StringBuilder(data);
+		for (int i = 0; i < valores.size(); ++i) {
+			dataBuilder.append(valores.get(i));
 			if (contador == this.numeroAtributos()) {
-				data += "\n";
+				dataBuilder.append("\n");
 				contador = 1;
 			} else {
-				data += ",";
+				dataBuilder.append(",");
 				++contador;
 			}
 		}
+		data = dataBuilder.toString();
 	    return data;
 	}
 	

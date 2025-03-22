@@ -46,7 +46,7 @@ public class KNN {
   }
   
   public double getDistanciaEuclidea(Vector vieja, Vector nueva) {
-	  if (vieja.size() != nueva.size()) {
+	  if (vieja.size()-1 != nueva.size()) {
 		  throw new IllegalArgumentException("Los vectores deben tener el mismo tamaño: vieja.size() = " + vieja.size() + ", nueva.size() = " + nueva.size());
 	  }
 	double dist = 0.0;
@@ -57,7 +57,7 @@ public class KNN {
   }
   
   public double getDistanciaEuclidea(Vector vieja, Vector nueva, List<Double> pesos) {
-	  if (vieja.size() != nueva.size()) {
+	  if (vieja.size()-1 != nueva.size()) {
 		  throw new IllegalArgumentException("Los vectores deben tener el mismo tamaño: vieja.size() = " + vieja.size() + ", nueva.size() = " + nueva.size());
 	  }
 		double dist = 0.0;
