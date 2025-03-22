@@ -77,7 +77,7 @@ public class Entrenamiento {
 		}
 		Logger logger = Logger.getLogger(Entrenamiento.class.getName());
 		if (logger.isLoggable(Level.INFO)) {
-			logger.info(String.format("La precisión predictiva: %.2f / %d = %.2f%%", aciertos, test.numeroCasos(), (aciertos / (double) test.numeroCasos()) * 100));
+			logger.info(String.format("La precisión predictiva: %.2f / %d = %.2f%%", aciertos, test.numeroCasos(), (aciertos / test.numeroCasos()) * 100));
 		}
 	}
 	
