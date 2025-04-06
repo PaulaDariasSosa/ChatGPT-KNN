@@ -16,11 +16,13 @@ public class Entrenamiento {
 	private Dataset train;
 	private Dataset test;
 	private List<String> clases;
+	private String distancia;
 	
 	public Entrenamiento() {
 	}
 	
-	public Entrenamiento(Dataset datos, double porcentaje) {
+	public Entrenamiento(Dataset datos, double porcentaje, String distancia) {
+		this.distancia = distancia;
 		Dataset trainset = new Dataset(datos.getAtributosEmpty());
 		Dataset testset = new Dataset(datos.getAtributosEmpty());
 		clases = datos.getClases();
@@ -38,7 +40,8 @@ public class Entrenamiento {
 		this.train.setPreprocesado(datos.getPreprocesado());
 	}
 	
-	public Entrenamiento(Dataset datos, double porcentaje, int semilla) {
+	public Entrenamiento(Dataset datos, double porcentaje, int semilla, String distancia) {
+		this.distancia = distancia;
 		Dataset trainset = new Dataset(datos.getAtributosEmpty());
 		Dataset testset = new Dataset(datos.getAtributosEmpty());
 		clases = datos.getClases();
@@ -72,7 +75,7 @@ public class Entrenamiento {
 				instance.add(pruebas.getInstance(i).getValores().get(j));
 			}
 			Instancia nueva = new Instancia(instance);
-			String clase = (new KNN(valorK).clasificar(train, nueva));
+			String clase = (new KNN(valorK, distancia).clasificar(train, nueva));
 			if (clase.equals(test.getInstance(i).getClase())) aciertos += 1;
 		}
 		Logger logger = Logger.getLogger(Entrenamiento.class.getName());
@@ -90,7 +93,7 @@ public class Entrenamiento {
 				instance.add(pruebas.getInstance(i).getValores().get(j));
 			}
 			Instancia nueva = new Instancia(instance);
-			String clase = (new KNN(valorK).clasificar(train, nueva));
+			String clase = (new KNN(valorK, distancia).clasificar(train, nueva));
 			confusion.set( clases.indexOf(test.getInstance(i).getClase()),clases.indexOf(clase),confusion.get(clases.indexOf(test.getInstance(i).getClase()),clases.indexOf(clase))+1);
 		}
 		Logger logger = Logger.getLogger(Entrenamiento.class.getName());

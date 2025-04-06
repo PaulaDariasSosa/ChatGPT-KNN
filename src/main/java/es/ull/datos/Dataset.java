@@ -1,10 +1,6 @@
 package datos;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +9,8 @@ import java.util.logging.Logger;
 public class Dataset {
 	private List<Atributo> atributos;
 	int preprocesado;
-	
+	private Dataset datasetOriginal;
+
 	public Dataset() {
 		this.atributos = new ArrayList<Atributo>();
 	}
@@ -26,6 +23,7 @@ public class Dataset {
 	public Dataset(String filename) throws IOException {
 		this();
 		this.read(filename);
+		this.datasetOriginal = new Dataset(this);
 	}
 	
 	public Dataset(Dataset datos) {
@@ -119,17 +117,41 @@ public class Dataset {
 	}
 	
 	// Método para escribir el dataset en un archivo CSV
-    public void write(String filename) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(this.toString());
-        }
-    }
-	
+	public void write(String filename) throws IOException {
+		File archivo = new File(filename);
+
+		// Verificar si el archivo existe y se puede escribir en él
+		if (archivo.exists() && !archivo.canWrite()) {
+			throw new IOException("❌ No se puede escribir en el archivo: " + filename);
+		}
+
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+			writer.write(this.toString());
+		} catch (SecurityException e) {
+			throw new IOException("❌ No tienes permisos para escribir en el archivo: " + filename, e);
+		}
+
+		// Verificar si el archivo se escribió correctamente
+		if (archivo.exists() && archivo.length() == 0) {
+			throw new IOException("❌ Error: El archivo se escribió, pero está vacío.");
+		}
+	}
+
+
 	public void read(String filename) throws IOException {
+		File archivo = new File(filename);
+
+		if (!archivo.exists() || !archivo.isFile()) {
+			throw new FileNotFoundException("❌ Error: El archivo no existe o no es válido -> " + filename);
+		}
 		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             // Leer la primera línea para obtener los nombres de los atributos
+			String primeraLinea = reader.readLine();
+			if (primeraLinea == null) {
+				throw new IOException("❌ Error: El archivo está vacío -> " + filename);
+			}
 			// llamar al constructor vacio
-            String[] attributeNamesArray = reader.readLine().split(",");
+            String[] attributeNamesArray = primeraLinea.split(",");
             String line;
             if ((line = reader.readLine()) != null) {
             	String[] values = line.split(",");
@@ -235,5 +257,23 @@ public class Dataset {
 	public void setAtributos(List<Atributo> nuevos) {
 		this.atributos = nuevos;
 	}
+
+	public Dataset getOriginal() {
+		return datasetOriginal;
+	}
+
+	public void setOriginal() {
+		this.datasetOriginal = new Dataset(this);
+	}
+
+	public void restaurarOriginal() {
+		if (datasetOriginal != null) {
+			this.atributos = new ArrayList<>(datasetOriginal.getAtributos());
+			System.out.println("Se han restaurado los valores originales del dataset.");
+		} else {
+			System.out.println("No hay un dataset original guardado.");
+		}
+	}
+
 
 }
