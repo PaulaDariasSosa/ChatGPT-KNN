@@ -81,7 +81,10 @@ public class KnnTfg {
 		boolean entradaValida = false;
 
 		while (!entradaValida) {
-			LOGGER.info(String.format("Seleccione una opción (%d - %d): ", min, max));
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(String.format("Seleccione una opción (%d - %d): ", min, max));
+			}
+
 			if (scanner.hasNextInt()) {
 				opcion = scanner.nextInt();
 				scanner.nextLine();  // Limpia el buffer después de nextInt()
