@@ -1,7 +1,5 @@
 package datos;
 
-import knn.KnnTfg;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +60,6 @@ public class Dataset {
 	
 	// Print
 	public void print() {
-		Logger logger = Logger.getLogger(Dataset.class.getName());
 		if (logger.isLoggable(Level.INFO)) {
 			logger.info(this.toString());
 		}

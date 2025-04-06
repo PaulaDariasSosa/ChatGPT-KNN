@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,7 +81,7 @@ public class KnnTfg {
 		boolean entradaValida = false;
 
 		while (!entradaValida) {
-			LOGGER.info("Seleccione una opción (" + min + " - " + max + "): ");
+			LOGGER.info(String.format("Seleccione una opción (%d - %d): ", min, max));
 			if (scanner.hasNextInt()) {
 				opcion = scanner.nextInt();
 				scanner.nextLine();  // Limpia el buffer después de nextInt()
