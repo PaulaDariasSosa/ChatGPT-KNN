@@ -18,6 +18,13 @@ public class KnnTfg {
 	private static final String MSG_INTRODUCE_VALORES = "Introduce los valores: ";
 	private static final String MSG_INTRODUCE_VALOR_K = "Introduce el valor de k: ";
 	private static final String MSG_INTRODUCE_PORCENTAJE_TRAIN = "Introduzca el porcentaje para el conjunto de entrenamiento";
+	private static final String MSG_SELECCIONAR_OPCION = "Seleccione una opción:";
+	private static final String MSG_DISTANCIA_EUCLIDEA = "  [1] Distancia Euclidea ";
+	private static final String MSG_DISTANCIA_MANHATTAN = "  [2] Distancia Manhattan ";
+	private static final String MSG_DISTANCIA_MINKOWSKI = "  [3] Distancia Minkowski ";
+	private static final String DISTANCIA_EUCLIDIANA = "euclidiana";
+	private static final String DISTANCIA_MANHATTAN = "manhattan";
+	private static final String DISTANCIA_MINKOWSKI = "minkowski";
 	private static final Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) throws IOException {
@@ -60,7 +67,7 @@ public class KnnTfg {
 	}
 
 	private static void mostrarMenu() {
-		LOGGER.info("Seleccione una opción:");
+		LOGGER.info(MSG_SELECCIONAR_OPCION);
 		LOGGER.info("  [1] Cargar un dataset ");
 		LOGGER.info("  [2] Guardar un dataset ");
 		LOGGER.info("  [3] Modificar un dataset ");
@@ -75,17 +82,17 @@ public class KnnTfg {
 		boolean entradaValida = false;
 
 		while (!entradaValida) {
-			System.out.print("Seleccione una opción (" + min + " - " + max + "): ");
+			LOGGER.info("Seleccione una opción (" + min + " - " + max + "): ");
 			if (scanner.hasNextInt()) {
 				opcion = scanner.nextInt();
 				scanner.nextLine();  // Limpia el buffer después de nextInt()
 				if (opcion >= min && opcion <= max) {
 					entradaValida = true;
 				} else {
-					System.out.println("Opción fuera de rango. Intente de nuevo.");
+					LOGGER.info("Opción fuera de rango. Intente de nuevo.");
 				}
 			} else {
-				System.out.println("Entrada no válida. Introduzca un número.");
+				LOGGER.info("Entrada no válida. Introduzca un número.");
 				scanner.next();  // Limpia la entrada incorrecta
 			}
 		}
@@ -106,23 +113,23 @@ public class KnnTfg {
 		LOGGER.info(MSG_INTRODUCE_VALOR_K);
 		int k = leerOpcion(scanner, 1, datos.numeroCasos());
 		String tipoDistancia = "";
-		LOGGER.info("Seleccione una opción:");
-		LOGGER.info("  [1] Distancia Euclidea ");
-		LOGGER.info("  [2] Distancia Manhattan ");
-		LOGGER.info("  [3] Distancia Minkowski ");
+		LOGGER.info(MSG_SELECCIONAR_OPCION);
+		LOGGER.info(MSG_DISTANCIA_EUCLIDEA);
+		LOGGER.info(MSG_DISTANCIA_MANHATTAN);
+		LOGGER.info(MSG_DISTANCIA_MINKOWSKI);
 		int opcion = leerOpcion(scanner, 1,3);
 		switch(opcion) {
 		case 1:
-			tipoDistancia = "euclidiana";
+			tipoDistancia = DISTANCIA_EUCLIDIANA;
 			break;
 		case 2:
-			tipoDistancia = "manhattan";
+			tipoDistancia = DISTANCIA_MANHATTAN;
 			break;
 		case 3:
-			tipoDistancia = "minkowski";
+			tipoDistancia = DISTANCIA_MINKOWSKI;
 			break;
 		default:
-			tipoDistancia = "euclidiana";
+			tipoDistancia = DISTANCIA_EUCLIDIANA;
 		}
 		KNN intento = new KNN(k, tipoDistancia);
 
@@ -180,7 +187,6 @@ public class KnnTfg {
 	
 	public static Dataset modify(Dataset data) {
 		int opcion = 2;
-		String valores = "";
 		while (opcion != 5) {
 			LOGGER.info("Elija una opción de modificación ");
 			LOGGER.info("      [1] Añadir instancia ");
@@ -192,7 +198,7 @@ public class KnnTfg {
 			opcion = leerOpcion(scanner,1,5);
 			switch(opcion) {
 			case(1):
-				return añadirInstancia(data);
+				return anadirInstancia(data);
 			case(2):
 				return eliminarInstancia(data);
 			case(3):
@@ -212,15 +218,14 @@ public class KnnTfg {
 		return data;
 	}
 
-	public static Dataset añadirInstancia(Dataset data) {
-		if (data.numeroCasos() == 0) {
-			LOGGER.warning("No hay instancias para eliminar.");
-			return data;
-		}
-		int valor = 0;
-		LOGGER.info("Introduce el indice a eliminar: ");
-		valor = leerOpcion(scanner, 0, data.numeroCasos()-1);
-		data.delete(valor);
+	public static Dataset anadirInstancia(Dataset data) {
+		String valores = "";
+		LOGGER.info(MSG_INTRODUCE_VALORES);
+		Scanner scanner1 = new Scanner(System.in);
+		valores = scanner1.nextLine();
+		String[] subcadenas = valores.split(",");
+		ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(subcadenas));
+		data.add(arrayList);
 		return data;
 	}
 
@@ -272,7 +277,7 @@ public class KnnTfg {
 				data.setOriginal();
 			}
 			data = new Dataset (intento1.procesar(data));
-			System.out.println("El dataset ha sido normalizado.");
+			LOGGER.info("El dataset ha sido normalizado.");
 			data.setPreprocesado(2);
 			break;
 		case(3):
@@ -281,7 +286,7 @@ public class KnnTfg {
 				data.setOriginal();
 			}
 			data = new Dataset (intento2.procesar(data));
-			System.out.println("El dataset ha sido estandarizado.");
+			LOGGER.info("El dataset ha sido estandarizado.");
 			data.setPreprocesado(3);
 			break;
 		default:
@@ -290,7 +295,7 @@ public class KnnTfg {
 				data.setOriginal();
 			}
 			data = new Dataset (intento1.procesar(data));
-			System.out.println("El dataset ha sido normalizado.");
+			LOGGER.info("El dataset ha sido normalizado.");
 			data.setPreprocesado(2);
 		}
 		return data;
@@ -490,23 +495,23 @@ public class KnnTfg {
 				LOGGER.info(MSG_INTRODUCE_PORCENTAJE_TRAIN);
 				valor = leerOpcion(scanner, 1, 100);
 				String tipoDistancia = "";
-				LOGGER.info("Seleccione una opción:");
-				LOGGER.info("  [1] Distancia Euclidea ");
-				LOGGER.info("  [2] Distancia Manhattan ");
-				LOGGER.info("  [3] Distancia Minkowski ");
+				LOGGER.info(MSG_SELECCIONAR_OPCION);
+				LOGGER.info(MSG_DISTANCIA_EUCLIDEA);
+				LOGGER.info(MSG_DISTANCIA_MANHATTAN);
+				LOGGER.info(MSG_DISTANCIA_MINKOWSKI);
 				opcion = leerOpcion(scanner, 1,3);
 				switch(opcion) {
 					case 1:
-						tipoDistancia = "euclidiana";
+						tipoDistancia = DISTANCIA_EUCLIDIANA;
 						break;
 					case 2:
-						tipoDistancia = "manhattan";
+						tipoDistancia = DISTANCIA_MANHATTAN;
 						break;
 					case 3:
-						tipoDistancia = "minkowski";
+						tipoDistancia =DISTANCIA_MINKOWSKI;
 						break;
 					default:
-						tipoDistancia = "euclidiana";
+						tipoDistancia = DISTANCIA_EUCLIDIANA;
 				}
 				nuevo = new Entrenamiento(datos, (double)valor/100, tipoDistancia);
 				LOGGER.info(MSG_INTRODUCE_VALOR_K);
@@ -542,24 +547,24 @@ public class KnnTfg {
 	}
 	
 	public static Entrenamiento experimentacionAleatoria(Dataset datos) {
-		LOGGER.info("Seleccione una opción:");
-		LOGGER.info("  [1] Distancia Euclidea ");
-		LOGGER.info("  [2] Distancia Manhattan ");
-		LOGGER.info("  [3] Distancia Minkowski ");
+		LOGGER.info(MSG_SELECCIONAR_OPCION);
+		LOGGER.info(MSG_DISTANCIA_EUCLIDEA);
+		LOGGER.info(MSG_DISTANCIA_MANHATTAN);
+		LOGGER.info(MSG_DISTANCIA_MINKOWSKI);
 		int opcionDistancia = leerOpcion(scanner, 1,3);
 		String tipoDistancia = "";
 		switch(opcionDistancia) {
 			case 1:
-				tipoDistancia = "euclidiana";
+				tipoDistancia = DISTANCIA_EUCLIDIANA;
 				break;
 			case 2:
-				tipoDistancia = "manhattan";
+				tipoDistancia = DISTANCIA_MANHATTAN;
 				break;
 			case 3:
-				tipoDistancia = "minkowski";
+				tipoDistancia = DISTANCIA_MINKOWSKI;
 				break;
 			default:
-				tipoDistancia = "euclidiana";
+				tipoDistancia = DISTANCIA_EUCLIDIANA;
 		}
 		LOGGER.info("              [1] Semilla(Seed) por defecto");
 		LOGGER.info("              [2] Semilla(Seed) manual");

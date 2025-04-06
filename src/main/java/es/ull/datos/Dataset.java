@@ -1,5 +1,7 @@
 package datos;
 
+import knn.KnnTfg;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ public class Dataset {
 	private List<Atributo> atributos;
 	int preprocesado;
 	private Dataset datasetOriginal;
+	private static final Logger logger = Logger.getLogger(Dataset.class.getName());
 
 	public Dataset() {
 		this.atributos = new ArrayList<Atributo>();
@@ -269,9 +272,9 @@ public class Dataset {
 	public void restaurarOriginal() {
 		if (datasetOriginal != null) {
 			this.atributos = new ArrayList<>(datasetOriginal.getAtributos());
-			System.out.println("Se han restaurado los valores originales del dataset.");
+			logger.info("Se han restaurado los valores originales del dataset.");
 		} else {
-			System.out.println("No hay un dataset original guardado.");
+			logger.info("No hay un dataset original guardado.");
 		}
 	}
 
