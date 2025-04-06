@@ -1,5 +1,6 @@
 package clasificacion;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -93,9 +94,11 @@ public class KNN {
 
 		// Si hay más de una clase con la distancia mínima acumulada, se resuelve aleatoriamente
 		if (posiblesGanadores.size() > 1) {
-			Random rand = new Random();
-			return posiblesGanadores.get(rand.nextInt(posiblesGanadores.size()));
+			SecureRandom secureRand = new SecureRandom();
+			int index = secureRand.nextInt(posiblesGanadores.size());
+			return posiblesGanadores.get(index);
 		}
+
 
 		return nombresClases.get(indiceGanador);
 	}
