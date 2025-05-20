@@ -57,32 +57,36 @@ public class Cuantitativo extends Atributo{
 	}
 	
 	public double media() {
-		double media = this.valores.get(0);
+		double media = 0.0;
 		for(int i = 0; i < this.valores.size(); ++i) {
 			media += this.valores.get(i);
 		}
 		return media/this.valores.size();
 	}
-	
+
 	public double desviacion() {
+		if (valores.size() == 0) return 0.0;
 		double media = this.media();
-		double auxiliar = 0;
-		for(int i = 0; i < this.valores.size(); ++i) {
-			auxiliar += (this.valores.get(i) - media) * (this.valores.get(i) - media);
+		double suma = 0.0;
+		for (int i = 0; i < valores.size(); ++i) {
+			suma += Math.pow(valores.get(i) - media, 2);
 		}
-		auxiliar /= this.valores.size();
-		return Math.sqrt(auxiliar);
+		return Math.sqrt(suma / valores.size());
 	}
 	
 	public int size() {
 		return this.valores.size();
 	}
-	
+
 	public void estandarizacion() {
+		double media = this.media();
+		double desviacion = this.desviacion();
+		if (desviacion == 0.0) return; // Evitar división por cero
 		for (int i = 0; i < valores.size(); ++i) {
-			valores.set(i, (valores.get(i)-this.media())/this.desviacion());
+			valores.set(i, (valores.get(i) - media) / desviacion);
 		}
 	}
+
 
 	@Override
 	public void add(Object valor) {

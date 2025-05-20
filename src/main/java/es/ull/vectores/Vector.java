@@ -279,12 +279,24 @@ public class Vector {
 
     private void readFileWithScanner(File file) throws FileNotFoundException {
         try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextDouble()) {
-                coef.add(scanner.nextDouble());
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    String[] tokens = line.split("[,\\s]+"); // divide por comas o espacios
+                    for (String token : tokens) {
+                        try {
+                            coef.add(Double.parseDouble(token.trim()));
+                        } catch (NumberFormatException e) {
+                            // log o ignora si no es número
+                            Logger.getLogger(Vector.class.getName()).log(Level.WARNING, "Valor no válido: " + token, e);
+                        }
+                    }
+                }
             }
         }
     }
-    
+
+
     public List<Double> getValores() {
         return this.coef;
     }

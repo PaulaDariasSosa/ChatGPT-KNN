@@ -144,11 +144,10 @@ public class Matriz {
     	// Crear una nueva matriz transpuesta
     	ArrayList<Vector> transposedMatrix = new ArrayList<Vector>(numRows);
         for (int i = 0; i < numRows; i++) {
-            transposedMatrix.set(i, (new Vector(numCols)));
+            transposedMatrix.add(new Vector(numCols));
             for (int j = 0; j < numCols; j++) {
-            	Vector aux = transposedMatrix.get(i);
-            	aux.set(j, matrix.get(j).get(i));
-                transposedMatrix.set(i, aux);
+                transposedMatrix.get(i).set(j, matrix.get(j).get(i));
+
             }
         }
         // Actualizar la matriz original con la matriz transpuesta
@@ -159,12 +158,15 @@ public class Matriz {
     
     public void deleteRows(int indice) {
     	matrix.remove(indice);
+        this.numRows -= 1;
     }
     
     // hace la traspuesta y luego llama a deleterows
     public void deleteCols(int indice) {
     	this.transpose();
     	this.deleteRows(indice);
+        this.numCols -= 1;
+        this.transpose();
     }
     
     public void addRows() {
