@@ -6,10 +6,20 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @brief Clase de pruebas unitarias para la clase Matriz.
+ *
+ * Esta clase contiene test para verificar el correcto funcionamiento
+ * de los constructores, métodos de acceso, mutadores, operaciones
+ * básicas, y funcionalidades de la clase Matriz.
+ */
 class MatrizTest {
 
     private Matriz matriz;
 
+    /**
+     * @brief Inicializa una matriz de 2x2 con valores específicos antes de cada test.
+     */
     @BeforeEach
     void setUp() {
         matriz = new Matriz(2, 2);
@@ -19,6 +29,9 @@ class MatrizTest {
         matriz.set(1, 1, 4.0);
     }
 
+    /**
+     * @brief Test del constructor por defecto, que debe crear una matriz 1x1.
+     */
     @Test
     void testConstructorDefault() {
         Matriz m = new Matriz();
@@ -26,6 +39,9 @@ class MatrizTest {
         assertEquals(1, m.getNumCols());
     }
 
+    /**
+     * @brief Test del constructor con filas, columnas y valores iniciales.
+     */
     @Test
     void testConstructorCoef() {
         double[][] values = {{1.0, 2.0}, {3.0, 4.0}};
@@ -33,6 +49,9 @@ class MatrizTest {
         assertEquals(4.0, m.get(1, 1));
     }
 
+    /**
+     * @brief Test del constructor que recibe una lista de vectores.
+     */
     @Test
     void testConstructorFromVectorList() {
         List<Vector> vectors = new ArrayList<>();
@@ -42,12 +61,18 @@ class MatrizTest {
         assertEquals(3.0, m.get(1, 0));
     }
 
+    /**
+     * @brief Test de los métodos get y set para modificar y obtener valores de la matriz.
+     */
     @Test
     void testGetSet() {
         matriz.set(0, 0, 9.0);
         assertEquals(9.0, matriz.get(0, 0));
     }
 
+    /**
+     * @brief Test del método transpose para verificar la matriz transpuesta.
+     */
     @Test
     void testTranspose() {
         double[][] datos = {
@@ -55,7 +80,7 @@ class MatrizTest {
                 {3, 4}
         };
         Matriz matriz = new Matriz(2, 2, datos);
-        matriz.transpose();  // 2x2 sigue siendo 2x2, pero transpuesta
+        matriz.transpose();
 
         assertEquals(2, matriz.getNumRows());
         assertEquals(2, matriz.getNumCols());
@@ -63,6 +88,9 @@ class MatrizTest {
         assertEquals(3, matriz.get(0, 1));
     }
 
+    /**
+     * @brief Test de la multiplicación de matrices.
+     */
     @Test
     void testMultiply() {
         Matriz result = Matriz.multiply(matriz, matriz);
@@ -70,6 +98,9 @@ class MatrizTest {
         assertEquals(10.0, result.get(0, 1));
     }
 
+    /**
+     * @brief Test del método equals para comparar matrices.
+     */
     @Test
     void testEquals() {
         Matriz copia = new Matriz(2, 2);
@@ -80,12 +111,18 @@ class MatrizTest {
         assertTrue(matriz.equals(copia));
     }
 
+    /**
+     * @brief Test del método deleteRows para eliminar una fila.
+     */
     @Test
     void testDeleteRows() {
         matriz.deleteRows(0);
         assertEquals(1, matriz.getNumRows());
     }
 
+    /**
+     * @brief Test del método deleteCols para eliminar una columna.
+     */
     @Test
     void testDeleteCols() {
         double[][] datos = {
@@ -93,14 +130,15 @@ class MatrizTest {
                 {3, 4}
         };
         Matriz matriz = new Matriz(2, 2, datos);
-        matriz.deleteCols(1);  // Elimina la columna 1
+        matriz.deleteCols(1);
 
-        // Asegúrate de que ahora solo haya una columna
         assertEquals(1, matriz.getNumCols());
         assertEquals(1.0, matriz.get(0, 0));
     }
 
-
+    /**
+     * @brief Test para agregar filas y columnas a la matriz.
+     */
     @Test
     void testAddRowsCols() {
         matriz.addRows();
@@ -109,6 +147,9 @@ class MatrizTest {
         assertEquals(3, matriz.getNumCols());
     }
 
+    /**
+     * @brief Test del método normalizar que normaliza los vectores de la matriz.
+     */
     @Test
     void testNormalize() {
         double[][] datos = {
@@ -126,7 +167,10 @@ class MatrizTest {
         }
     }
 
-
+    /**
+     * @brief Test de escritura y lectura de matriz a archivo.
+     * @throws IOException Si ocurre un error de entrada/salida.
+     */
     @Test
     void testWriteReadFile() throws IOException {
         String filename = "test_matriz.txt";
@@ -139,9 +183,11 @@ class MatrizTest {
         new File(filename).delete();
     }
 
+    /**
+     * @brief Test que verifica que acceder a una posición fuera de los límites lanza excepción.
+     */
     @Test
     void testGetOutOfBoundsThrows() {
         assertThrows(IndexOutOfBoundsException.class, () -> matriz.get(5, 5));
     }
 }
-

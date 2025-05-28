@@ -8,8 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * @class KNNTest
+ * @brief Pruebas unitarias para la clase {@link KNN}, que implementa el algoritmo k-vecinos más cercanos.
+ *
+ * Se prueban distintas métricas de distancia (Euclidiana, Manhattan, Minkowski), tanto con como sin pesos,
+ * y se valida el comportamiento básico de clasificación.
+ */
 class KNNTest {
 
+    /**
+     * @test Verifica la distancia Euclidiana sin pesos entre dos vectores.
+     */
     @Test
     void testDistanciaEuclideaSinPesos() {
         KNN knn = new KNN(3);
@@ -19,6 +29,9 @@ class KNNTest {
         assertEquals(5, dist, 1e-6);
     }
 
+    /**
+     * @test Verifica la distancia Euclidiana ponderada entre dos vectores.
+     */
     @Test
     void testDistanciaEuclideaConPesos() {
         KNN knn = new KNN(3);
@@ -29,6 +42,9 @@ class KNNTest {
         assertEquals(3.605551275463989, dist, 1e-6);
     }
 
+    /**
+     * @test Verifica la distancia Manhattan entre dos vectores usando pesos.
+     */
     @Test
     void testDistanciaManhattan() {
         KNN knn = new KNN(3, "manhattan");
@@ -39,6 +55,9 @@ class KNNTest {
         assertEquals(7.0, dist, 1e-6);
     }
 
+    /**
+     * @test Verifica la distancia Minkowski (con r=3) entre dos vectores con pesos.
+     */
     @Test
     void testDistanciaMinkowski() {
         KNN knn = new KNN(3, "minkowski");
@@ -50,6 +69,11 @@ class KNNTest {
         assertEquals(esperado, dist, 1e-6);
     }
 
+    /**
+     * @test Verifica que el clasificador KNN asigna la clase correcta en un caso simple.
+     *
+     * Se utiliza una instancia de prueba que debería clasificarse como "Rojo" por cercanía.
+     */
     @Test
     void testClasificacionSimple() {
         KNN knn = new KNN(1, "euclidiana");
@@ -66,7 +90,6 @@ class KNNTest {
         atributos.add(new Cualitativo("Color", colores));
         dataset = new Dataset(atributos);
 
-
         // Instancia de prueba (sin clase)
         Instancia nueva = new Instancia(List.of(1.5));
 
@@ -75,4 +98,3 @@ class KNNTest {
     }
 
 }
-

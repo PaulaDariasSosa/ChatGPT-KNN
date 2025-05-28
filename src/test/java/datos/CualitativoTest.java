@@ -8,8 +8,25 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * @class CualitativoTest
+ * @brief Clase de pruebas unitarias para la clase {@link Cualitativo}.
+ *
+ * Se valida el comportamiento de los constructores, la gestión de valores,
+ * el cálculo de clases y frecuencias, y los métodos auxiliares como {@code toString} y {@code clear}.
+ */
 public class CualitativoTest {
 
+    /**
+     * @test Verifica el correcto funcionamiento de los diferentes constructores de la clase {@link Cualitativo}.
+     *
+     * Comprueba:
+     * - Constructor por defecto.
+     * - Constructor con nombre.
+     * - Constructor con nombre y valor único.
+     * - Constructor con nombre y lista de valores.
+     * - Constructor copia.
+     */
     @Test
     void testConstructores() {
         Cualitativo c1 = new Cualitativo();
@@ -30,6 +47,11 @@ public class CualitativoTest {
         assertEquals(valores, copia.getValores());
     }
 
+    /**
+     * @test Verifica los métodos {@code add}, {@code delete} y {@code getValor} de la clase {@link Cualitativo}.
+     *
+     * Se asegura que los valores se añaden y eliminan correctamente y que se accede al valor deseado según su índice.
+     */
     @Test
     void testAddDeleteGetValor() {
         Cualitativo c = new Cualitativo("Color");
@@ -42,6 +64,14 @@ public class CualitativoTest {
         assertEquals("Verde", c.getValor(0));
     }
 
+    /**
+     * @test Verifica los métodos relacionados con clases y frecuencias en un atributo cualitativo.
+     *
+     * Evalúa {@code clases()}, {@code nClases()} y {@code frecuencia()} asegurando que:
+     * - Las clases se identifican correctamente.
+     * - Se calcula el número de clases.
+     * - Las frecuencias relativas son correctas y suman 1.
+     */
     @Test
     void testClasesYFrecuencias() {
         Cualitativo c = new Cualitativo("Tipo", Arrays.asList("A", "B", "A", "A", "C", "B"));
@@ -55,6 +85,13 @@ public class CualitativoTest {
         assertEquals(1.0, frecuencias.stream().mapToDouble(Double::doubleValue).sum(), 1e-6);
     }
 
+    /**
+     * @test Verifica el funcionamiento de los métodos {@code toString()} y {@code clear()}.
+     *
+     * Se comprueba que:
+     * - La representación textual es correcta antes de limpiar los valores.
+     * - La lista de valores queda vacía tras invocar {@code clear()}.
+     */
     @Test
     void testClearYToString() {
         List<String> colores = new ArrayList<>(List.of("Rojo", "Azul"));
@@ -64,4 +101,3 @@ public class CualitativoTest {
         assertTrue(c.getValores().isEmpty());
     }
 }
-

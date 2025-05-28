@@ -7,8 +7,18 @@ import datos.*;
 import java.util.*;
 import java.io.*;
 
+/**
+ * @class EntrenamientoTest
+ * @brief Pruebas unitarias para la clase {@link Entrenamiento}.
+ *
+ * Se prueban funcionalidades de inicialización, particionado de datos (split) con y sin semilla,
+ * generación de predicciones, generación de matriz de confusión y operaciones de lectura/escritura.
+ */
 class EntrenamientoTest {
 
+    /**
+     * @test Verifica la creación de un objeto Entrenamiento con split sin semilla.
+     */
     @Test
     void testEntrenamientoSplitSinSemilla() {
         Dataset dataset = new Dataset();
@@ -53,6 +63,9 @@ class EntrenamientoTest {
         assertNotNull(entrenamiento);
     }
 
+    /**
+     * @test Verifica la creación de un objeto Entrenamiento con split usando semilla fija.
+     */
     @Test
     void testEntrenamientoSplitConSemilla() {
         Dataset dataset = new Dataset();
@@ -97,6 +110,9 @@ class EntrenamientoTest {
         assertNotNull(entrenamiento);
     }
 
+    /**
+     * @test Verifica que la generación de predicción no genera errores.
+     */
     @Test
     void testGenerarPrediccionYPrecision() {
         Dataset dataset = new Dataset();
@@ -140,6 +156,9 @@ class EntrenamientoTest {
         entrenamiento.generarPrediccion(1);  // Debe ejecutarse sin errores
     }
 
+    /**
+     * @test Verifica que la generación de la matriz de confusión se ejecuta sin errores.
+     */
     @Test
     void testMatrizConfusion() {
         Dataset dataset = new Dataset();
@@ -183,6 +202,10 @@ class EntrenamientoTest {
         entrenamiento.generarMatriz(1);  // Debe imprimir la matriz sin errores
     }
 
+    /**
+     * @test Verifica la correcta escritura y lectura de archivos para entrenamiento.
+     * @throws IOException si hay errores en la lectura o escritura de archivos.
+     */
     @Test
     void testGuardarYCargar() throws IOException {
         Dataset dataset = new Dataset();
@@ -236,4 +259,3 @@ class EntrenamientoTest {
         f2.delete();
     }
 }
-

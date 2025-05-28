@@ -4,8 +4,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * @class AtributoTest
+ * @brief Clase de pruebas unitarias para la jerarquía de clases Atributo (Cualitativo y Cuantitativo).
+ *
+ * Esta clase valida el correcto funcionamiento de los métodos get y set
+ * para los atributos de tipo cualitativo y cuantitativo, incluyendo nombre, peso y representación textual.
+ */
 public class AtributoTest {
 
+    /**
+     * @test Verifica los métodos get y set en una instancia de {@link Cualitativo}.
+     *
+     * Se comprueba que el nombre y el peso se asignan correctamente, así como la salida
+     * del método {@code get()}, que combina ambos valores en una cadena.
+     */
     @Test
     void testGetSetNombreYPesoCualitativo() {
         Cualitativo c = new Cualitativo("Color");
@@ -16,6 +29,12 @@ public class AtributoTest {
         assertEquals("Tamaño: 0.7", c.get());
     }
 
+    /**
+     * @test Verifica los métodos get y set en una instancia de {@link Cuantitativo}.
+     *
+     * Se comprueba que el nombre y el peso se asignan correctamente, así como la salida
+     * del método {@code get()}, que combina ambos valores en una cadena.
+     */
     @Test
     void testGetSetNombreYPesoCuantitativo() {
         Cuantitativo c = new Cuantitativo("Edad");

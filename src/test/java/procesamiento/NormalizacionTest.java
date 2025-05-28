@@ -8,8 +8,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @class NormalizacionTest
+ * @brief Pruebas unitarias para la clase {@link Normalizacion}, encargada de normalizar atributos cuantitativos.
+ *
+ * Se comprueba que la normalización transforma correctamente los valores a un rango [0, 1], y que no afecta a atributos cualitativos.
+ */
 public class NormalizacionTest {
 
+    /**
+     * @test Verifica que un atributo {@link Cuantitativo} es correctamente normalizado.
+     *
+     * Se normaliza una lista de valores numéricos, y se comprueba que el valor mínimo es 0 y el máximo es 1.
+     */
     @Test
     void testNormalizacionCuantitativo() {
         Cuantitativo cuant = new Cuantitativo("Edad", new Vector(List.of(10.0, 20.0, 30.0)));
@@ -37,6 +48,11 @@ public class NormalizacionTest {
         assertEquals(1.0, max, 1e-6);
     }
 
+    /**
+     * @test Verifica que la normalización no afecta a atributos de tipo {@link Cualitativo}.
+     *
+     * Se asegura que los atributos cualitativos se mantienen sin modificación tras aplicar el preprocesado.
+     */
     @Test
     void testNormalizacionConCualitativo() {
         Dataset dataset = new Dataset();
@@ -50,4 +66,3 @@ public class NormalizacionTest {
         assertTrue(resultado.get(0) instanceof Cualitativo);
     }
 }
-

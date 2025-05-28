@@ -7,8 +7,25 @@ import vectores.Vector;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * @class CuantitativoTest
+ * @brief Pruebas unitarias para la clase {@link Cuantitativo}.
+ *
+ * Esta clase verifica el comportamiento de los distintos métodos de la clase {@link Cuantitativo},
+ * incluyendo sus constructores, manipulación de datos, estadísticas y transformaciones.
+ */
 public class CuantitativoTest {
 
+    /**
+     * @test Verifica el correcto funcionamiento de los constructores de la clase {@link Cuantitativo}.
+     *
+     * Prueba:
+     * - Constructor por defecto.
+     * - Constructor con nombre.
+     * - Constructor con nombre y valor individual.
+     * - Constructor con nombre y vector de valores.
+     * - Constructor copia.
+     */
     @Test
     void testConstructores() {
         Cuantitativo c1 = new Cuantitativo();
@@ -30,6 +47,11 @@ public class CuantitativoTest {
         assertEquals(v, copia.getValores());
     }
 
+    /**
+     * @test Verifica los métodos {@code add}, {@code delete} y {@code getValor} en objetos {@link Cuantitativo}.
+     *
+     * Se asegura que los valores puedan agregarse, eliminarse y recuperarse correctamente mediante sus índices.
+     */
     @Test
     void testAddDeleteGetValor() {
         Cuantitativo c = new Cuantitativo("Medidas");
@@ -42,6 +64,14 @@ public class CuantitativoTest {
         assertEquals(3.5, c.getValor(0));
     }
 
+    /**
+     * @test Verifica los cálculos estadísticos básicos: mínimo, máximo, media y desviación estándar.
+     *
+     * Comprueba que:
+     * - El mínimo y máximo se calculan correctamente.
+     * - La media aritmética es precisa.
+     * - La desviación estándar se aproxima al valor esperado con una tolerancia razonable.
+     */
     @Test
     void testMinimoMaximoMediaDesviacion() {
         Cuantitativo c = new Cuantitativo("Notas", new Vector(List.of(5.0, 7.0, 10.0)));
@@ -55,6 +85,11 @@ public class CuantitativoTest {
         assertEquals(desviacionEsperada, c.desviacion(), 1e-1); // margen relajado
     }
 
+    /**
+     * @test Verifica la correcta estandarización de valores (media ≈ 0) en el atributo {@link Cuantitativo}.
+     *
+     * Asegura que tras la transformación, la media del vector de valores sea aproximadamente cero.
+     */
     @Test
     void testEstandarizacion() {
         Cuantitativo c = new Cuantitativo("X", new Vector(List.of(1.0, 2.0, 3.0)));
@@ -70,6 +105,13 @@ public class CuantitativoTest {
         assertTrue(Math.abs(media) < 1e-6);
     }
 
+    /**
+     * @test Verifica el funcionamiento de los métodos {@code toString()} y {@code clear()}.
+     *
+     * Se comprueba que:
+     * - La representación textual del atributo es correcta.
+     * - Los valores se eliminan completamente al usar {@code clear()}.
+     */
     @Test
     void testClearYToString() {
         Cuantitativo c = new Cuantitativo("Altura", new Vector(List.of(1.8, 1.9)));
@@ -79,4 +121,3 @@ public class CuantitativoTest {
         assertEquals(0, c.getValores().size());
     }
 }
-

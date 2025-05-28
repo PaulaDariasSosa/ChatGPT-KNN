@@ -8,8 +8,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @class DatosCrudosTest
+ * @brief Pruebas unitarias para la clase {@link DatosCrudos}.
+ *
+ * Esta clase prueba que el método {@code procesar()} de {@link DatosCrudos} devuelve
+ * la misma referencia de atributos sin modificaciones.
+ */
 public class DatosCrudosTest {
 
+    /**
+     * @test Verifica que el método {@code procesar()} devuelve la misma referencia
+     * de la lista de atributos del {@link Dataset} sin alterarla.
+     */
     @Test
     void testProcesarDevuelveMismaReferencia() {
         Dataset dataset = new Dataset();
@@ -24,4 +35,3 @@ public class DatosCrudosTest {
         assertEquals(dataset.getAtributos(), resultado);
     }
 }
-

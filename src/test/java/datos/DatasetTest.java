@@ -11,10 +11,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * @class DatasetTest
+ * @brief Pruebas unitarias para la clase {@link Dataset}.
+ *
+ * Esta clase verifica el correcto funcionamiento de la gestión de atributos, instancias,
+ * serialización y manipulación de pesos en un conjunto de datos.
+ */
 public class DatasetTest {
 
     private Dataset dataset;
 
+    /**
+     * @brief Inicializa un conjunto de datos antes de cada test.
+     *
+     * Se crean atributos cuantitativos y cualitativos con datos de ejemplo.
+     */
     @BeforeEach
     void setUp() {
         // ⚠️ IMPORTANTE: Cualitativo debe ser el último si vas a usar getClases()
@@ -32,39 +44,55 @@ public class DatasetTest {
         dataset = new Dataset(atributos);
     }
 
+    /**
+     * @test Verifica que el número de atributos sea el esperado.
+     */
     @Test
     void testNumeroAtributos() {
         assertEquals(2, dataset.numeroAtributos());
     }
 
+    /**
+     * @test Verifica que el número de casos (instancias) sea correcto.
+     */
     @Test
     void testNumeroCasos() {
         assertEquals(3, dataset.numeroCasos());
     }
 
+    /**
+     * @test Verifica que los nombres de los atributos se obtienen correctamente.
+     */
     @Test
     void testNombreAtributos() {
         List<String> esperado = Arrays.asList("Edad", "Color");
         assertEquals(esperado, dataset.nombreAtributos());
     }
 
+    /**
+     * @test Prueba la adición y eliminación de instancias mediante listas de Strings.
+     */
     @Test
     void testAddListYDelete() {
-        // Valores según tipo: Cuantitativo, Cualitativo
         dataset.add(Arrays.asList("40", "Amarillo"));
         assertEquals(4, dataset.numeroCasos());
         dataset.delete(3);
         assertEquals(3, dataset.numeroCasos());
     }
 
+    /**
+     * @test Verifica la adición de una instancia del tipo {@link Instancia}.
+     */
     @Test
     void testAddInstancia() {
-        // Cuantitativo, Cualitativo
         List<Object> valores = Arrays.asList(40.0, "Amarillo");
         dataset.add(new Instancia(valores));
         assertEquals(4, dataset.numeroCasos());
     }
 
+    /**
+     * @test Verifica la obtención de una instancia específica por índice.
+     */
     @Test
     void testGetInstance() {
         Instancia instancia = dataset.getInstance(0);
@@ -72,6 +100,9 @@ public class DatasetTest {
         assertEquals("Rojo", instancia.getValores().get(1));
     }
 
+    /**
+     * @test Verifica que se obtienen correctamente los valores de todas las instancias.
+     */
     @Test
     void testGetValores() {
         List<String> valores = dataset.getValores();
@@ -79,6 +110,9 @@ public class DatasetTest {
         assertEquals("Rojo", valores.get(1));
     }
 
+    /**
+     * @test Verifica que se obtienen correctamente las clases posibles (valores del atributo cualitativo final).
+     */
     @Test
     void testGetClases() {
         List<String> clases = dataset.getClases();
@@ -86,18 +120,27 @@ public class DatasetTest {
         assertEquals(esperado, clases);
     }
 
+    /**
+     * @test Verifica la obtención de los pesos actuales de los atributos.
+     */
     @Test
     void testGetPesos() {
         String pesos = dataset.getPesos();
         assertTrue(pesos.contains("1.0"));
     }
 
+    /**
+     * @test Prueba la modificación del peso de un atributo individual.
+     */
     @Test
     void testCambiarPesoIndividual() {
         dataset.cambiarPeso(0, 2.5);
         assertEquals(2.5, dataset.get(0).getPeso());
     }
 
+    /**
+     * @test Verifica que el método {@code restaurarOriginal()} revierte correctamente los pesos modificados.
+     */
     @Test
     void testRestaurarOriginal() {
         dataset.setOriginal();
@@ -107,6 +150,9 @@ public class DatasetTest {
         dataset.restaurarOriginal();
     }
 
+    /**
+     * @test Verifica el método {@code toString()} del dataset.
+     */
     @Test
     void testToString() {
         String salida = dataset.toString();
@@ -114,6 +160,11 @@ public class DatasetTest {
         assertTrue(salida.contains("Rojo"));
     }
 
+    /**
+     * @test Verifica la funcionalidad de escritura y lectura desde archivo CSV.
+     *
+     * @throws IOException si ocurre un error durante la escritura o lectura del archivo.
+     */
     @Test
     void testWriteAndRead() throws IOException {
         String filename = "test_dataset.csv";
