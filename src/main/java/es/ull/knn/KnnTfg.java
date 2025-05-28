@@ -12,6 +12,13 @@ import datos.*;
 import procesamiento.*;
 import entrenamiento.*;
 
+/**
+ * @file KnnTfg.java
+ * @brief Clase principal para ejecutar el sistema KNN con opciones de preprocesamiento, modificación, visualización e implementación del algoritmo.
+ *
+ * Este programa permite al usuario interactuar con datasets, aplicar preprocesamiento, clasificar instancias usando el algoritmo KNN
+ * y realizar tareas de entrenamiento y experimentación. Utiliza consola como interfaz de usuario.
+ */
 public class KnnTfg {
 	private static final Logger LOGGER = Logger.getLogger(KnnTfg.class.getName());
 	private static final String MSG_INTRODUCE_VALORES = "Introduce los valores: ";
@@ -26,6 +33,11 @@ public class KnnTfg {
 	private static final String DISTANCIA_MINKOWSKI = "minkowski";
 	private static final Scanner scanner = new Scanner(System.in);
 
+	/**
+	 * @brief Punto de entrada principal del programa.
+	 * @param args Argumentos de línea de comandos (no utilizados).
+	 * @throws IOException si ocurre un error al leer o escribir archivos.
+	 */
 	public static void main(String[] args) throws IOException {
 		String ruta = "";
 		boolean salida = false;
@@ -65,6 +77,9 @@ public class KnnTfg {
 		}
 	}
 
+	/**
+	 * @brief Muestra el menú principal al usuario.
+	 */
 	private static void mostrarMenu() {
 		LOGGER.info(MSG_SELECCIONAR_OPCION);
 		LOGGER.info("  [1] Cargar un dataset ");
@@ -76,6 +91,13 @@ public class KnnTfg {
 		LOGGER.info("  [7] Algoritmo KNN para una instancia ");
 	}
 
+	/**
+	 * @brief Lee una opción válida del usuario desde consola.
+	 * @param scanner Objeto Scanner para leer entradas.
+	 * @param min Valor mínimo permitido.
+	 * @param max Valor máximo permitido.
+	 * @return Opción elegida como número entero.
+	 */
 	private static int leerOpcion(Scanner scanner, int min, int max) {
 		int opcion = -1;
 		boolean entradaValida = false;
@@ -101,16 +123,33 @@ public class KnnTfg {
 		return opcion;
 	}
 
+	/**
+	 * @brief Carga un dataset desde una ruta y nombre de archivo introducido por el usuario.
+	 * @param ruta Ruta base del archivo.
+	 * @return Dataset cargado desde el archivo.
+	 * @throws IOException si ocurre un error al leer el archivo.
+	 */
 	private static Dataset cargarDataset(String ruta) throws IOException {
 		String archivo = readFile(ruta);
 		return new Dataset(ruta + archivo);
 	}
 
+	/**
+	 * @brief Guarda un dataset en una ubicación especificada por el usuario.
+	 * @param ruta Ruta base para guardar el archivo.
+	 * @param datos Dataset que se desea guardar.
+	 * @throws IOException si ocurre un error al escribir el archivo.
+	 */
 	private static void guardarDataset(String ruta, Dataset datos) throws IOException {
 		String archivo = readFile(ruta);
 		datos.write(ruta + archivo);
 	}
 
+	/**
+	 * @brief Ejecuta el algoritmo KNN sobre una instancia ingresada manualmente.
+	 * @param datos Dataset preprocesado sobre el cual clasificar.
+	 * @param datosCrudos Dataset original sin preprocesar.
+	 */
 	private static void ejecutarKNN(Dataset datos, Dataset datosCrudos) {
 		LOGGER.info(MSG_INTRODUCE_VALOR_K);
 		int k = leerOpcion(scanner, 1, datos.numeroCasos());
@@ -158,7 +197,12 @@ public class KnnTfg {
 			LOGGER.info("La clase elegida es: " + intento.clasificar(copiaCrudos, instance));
 		}
 	}
-	
+
+	/**
+	 * @brief Solicita la ruta y el nombre del archivo al usuario.
+	 * @param ruta Ruta base sugerida.
+	 * @return Nombre del archivo introducido.
+	 */
 	public static String readFile(String ruta) {
 		int opcion = 2;
 		String archivo = "";
@@ -186,7 +230,12 @@ public class KnnTfg {
 		}
 		return archivo;
 	}
-	
+
+	/**
+	 * @brief Permite modificar el dataset mediante varias opciones (añadir, eliminar, modificar instancias, cambiar pesos).
+	 * @param data Dataset a modificar.
+	 * @return Dataset modificado.
+	 */
 	public static Dataset modify(Dataset data) {
 		int opcion = 2;
 		while (opcion != 5) {
@@ -220,6 +269,11 @@ public class KnnTfg {
 		return data;
 	}
 
+	/**
+	 * @brief Añade una nueva instancia al dataset.
+	 * @param data Dataset al que se añadirá la instancia.
+	 * @return Dataset actualizado con la nueva instancia.
+	 */
 	public static Dataset anadirInstancia(Dataset data) {
 		String valores = "";
 		LOGGER.info(MSG_INTRODUCE_VALORES);
@@ -231,6 +285,11 @@ public class KnnTfg {
 		return data;
 	}
 
+	/**
+	 * @brief Elimina una instancia del dataset.
+	 * @param data Dataset del cual se eliminará una instancia.
+	 * @return Dataset actualizado.
+	 */
 	public static Dataset eliminarInstancia(Dataset data) {
 		if (data.numeroCasos() == 0) {
 			LOGGER.warning("No hay instancias para eliminar.");
@@ -243,6 +302,11 @@ public class KnnTfg {
 		return data;
 	}
 
+	/**
+	 * @brief Modifica una instancia en el dataset.
+	 * @param data Dataset que se modificará.
+	 * @return Dataset actualizado.
+	 */
 	public static Dataset modificarInstancia(Dataset data) {
 		if (data.numeroCasos() == 0) {
 			LOGGER.warning("No hay instancias para eliminar.");
@@ -260,7 +324,12 @@ public class KnnTfg {
 		data.delete(valor);
 		return data;
 	}
-	
+
+	/**
+	 * @brief Aplica un método de preprocesado al dataset (normalización, estandarización, etc.).
+	 * @param data Dataset al que se aplicará el preprocesado.
+	 * @return Dataset preprocesado.
+	 */
 	public static Dataset preprocesar(Dataset data) {
 		LOGGER.info("Seleccione la opción de preprocesado: ");
 		LOGGER.info("      [1] Datos crudos ");
@@ -302,7 +371,12 @@ public class KnnTfg {
 		}
 		return data;
 	}
-	
+
+	/**
+	 * @brief Cambia los pesos de los atributos del dataset.
+	 * @param data Dataset cuyos pesos serán modificados.
+	 * @return Dataset con los pesos actualizados.
+	 */
 	public static Dataset cambiarPesos(Dataset data) {
 		LOGGER.info("          [1] Asignar pesos distintos a todos los atributos ");
 		LOGGER.info("          [2] Mismo peso para todos los atributos "); // por defecto ( valor 1 )
@@ -337,7 +411,11 @@ public class KnnTfg {
 		}
 		return data;
 	}
-	
+
+	/**
+	 * @brief Muestra información del dataset según selección del usuario.
+	 * @param data Dataset del que se quiere obtener información.
+	 */
 	public static void info(Dataset data) {
 		LOGGER.info("          [1] Mostrar dataset ");
 		LOGGER.info("          [2] Mostrar instancia ");
@@ -370,7 +448,11 @@ public class KnnTfg {
 			break;
 		}
 	}
-	
+
+	/**
+	 * @brief Muestra información específica sobre atributos cuantitativos.
+	 * @param data Dataset que contiene los atributos.
+	 */
 	public static void infoCuantitativo(Dataset data) {
 		LOGGER.info("              [1] Mostrar nombre ");
 		LOGGER.info("              [2] Mostrar media ");
@@ -422,7 +504,11 @@ public class KnnTfg {
 			break;
 		}
 	}
-	
+
+	/**
+	 * @brief Muestra información específica sobre atributos cualitativos.
+	 * @param data Dataset que contiene los atributos.
+	 */
 	public static void infoCualitativo(Dataset data) {
 		LOGGER.info("              [1] Mostrar nombre ");
 		LOGGER.info("              [2] Mostrar número de clases ");
@@ -480,7 +566,12 @@ public class KnnTfg {
 			break;
 		}
 	}
-	
+
+	/**
+	 * @brief Permite realizar experimentación sobre un dataset (entrenamiento y prueba).
+	 * @param datos Dataset sobre el cual se realizará la experimentación.
+	 * @throws IOException si ocurre un error durante lectura o escritura.
+	 */
 	public static void experimentar(Dataset datos) throws IOException {
 		int opcion = 1;
 		Entrenamiento nuevo = new Entrenamiento();
@@ -547,7 +638,12 @@ public class KnnTfg {
 			}
 		}
 	}
-	
+
+	/**
+	 * @brief Ejecuta un experimento con partición aleatoria del dataset.
+	 * @param datos Dataset sobre el cual se realizará el experimento.
+	 * @return Objeto Entrenamiento con los resultados.
+	 */
 	public static Entrenamiento experimentacionAleatoria(Dataset datos) {
 		LOGGER.info(MSG_SELECCIONAR_OPCION);
 		LOGGER.info(MSG_DISTANCIA_EUCLIDEA);
